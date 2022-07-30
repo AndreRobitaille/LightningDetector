@@ -18,13 +18,11 @@ PLEASE MAKE VERSION HISTORY HERE:
 //#include <Lib_I2C.h>
 #include <DFRobot_AS3935_I2C.h>
 #include <math.h>
-#include <DFRobot_LCD.h> // library for the screen
+#include "DFRobot_RGBLCD1602.h" // library for the screen
 #include <Wire.h> // 99% Sure this is included in <DFROBOT_LCD.h> but just to be safe
 
-uint8_t colorR = 255; //Red of RGB
-uint8_t colorG = 0; // Green of RGB
-uint8_t colorB = 0; // Blue of RGB
-DFRobot_LCD lcd(16,2);  //16 characters and 2 lines
+
+DFRobot_RGBLCD1602 lcd(16,2);  //16 characters and 2 lines
 
 volatile int8_t AS3935IsrTrig = 0;
 
@@ -57,7 +55,7 @@ void setup() {
 
   // Initialize screen
   lcd.init();
-  lcd.setRGB(colorR, colorG, colorB);
+  lcd.setRGB(0, 0, 0);
 
   // Setup for the the I2C library: (enable pullups, set speed to 400kHz)
   //I2c.begin();
@@ -105,11 +103,31 @@ void loop() {
   
   if (intSrc == 1) { // Lightning strike
 
+    setScreenColor("red")
+
   } else if (intSrc == 2) { // Disturber
+    
+    setScreenColor("gray")
 
   } else if (intSrc == 3) { // Noise
-   
+    
+    setScreenColor("gray")
+
   }
+}
+
+void setScreenColor(char *color) {
+    
+  if (color == "red") {
+    lcd.setRGB(255, 0, 0);
+  } else if (color == "orange") {
+    lcd.setRGB(252, 134, 15);
+  } else if (color == "yellow") {
+    lcd.setRGB(235, 186, 52);
+  } else if (color == "gray") {
+    lcd.setRGB(201, 222, 255);
+  }
+
 }
 
 void printToScreen() {
