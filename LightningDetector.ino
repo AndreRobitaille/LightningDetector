@@ -109,9 +109,21 @@ void loop() {
     
     setScreenColor("gray")
 
+    Serial.println("Disturber discovered!");
+    lcd.setCursor(0,0); // line 1
+    lcd.print("Electromagnetic ");
+    lcd.setCursor(0,1); // line 2
+    lcd.print(" interference   ");
+
   } else if (intSrc == 3) { // Noise
     
     setScreenColor("gray")
+
+    Serial.println("Noise level too high!");
+    lcd.setCursor(0,0); // line 1
+    lcd.print("Background noise");
+    lcd.setCursor(0,1); // line 2
+    lcd.print("too high to use ");
 
   }
 }
